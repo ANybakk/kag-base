@@ -4,6 +4,7 @@
  * Author: ANybakk
  */
 
+#include "EntitySprite.as";
 
 
 namespace ANybakk {
@@ -17,13 +18,7 @@ namespace ANybakk {
      */
     void onInit(CSprite@ this) {
       
-      CBlob@ blob = this.getBlob();
-    
-      //Set default animation state (conveyor is not placed yet)
-      this.SetAnimation("default");
-      
-      //Set default frame to 0
-      this.animation.frame = 0;
+      ANybakk::EntitySprite::onInit(this);
       
       //Finished
       return;
@@ -36,18 +31,20 @@ namespace ANybakk {
      * Tick event function
      */
     void onTick(CSprite@ this) {
+      
+      ANybakk::EntitySprite::onTick(this);
 
       //Obtain a reference to the blob object
       CBlob@ blob = this.getBlob();
       
       //Check if tagged as recently placed
-      if(blob.hasTag("wasPlaced")) {
+      if(blob.hasTag("StructureBlob::wasPlaced")) {
       
         //Play a sound
         this.PlaySound(ANybakk::StructureVariables::PLACEMENT_SOUND);
         
         //Remove flag
-        blob.Untag("wasPlaced");
+        blob.Untag("StructureBlob::wasPlaced");
         
       }
       
@@ -68,7 +65,7 @@ namespace ANybakk {
       CBlob@ blob = this.getBlob();
       
       //Check if segment was recently placed
-      if(blob.hasTag("wasPlaced")) {
+      if(blob.hasTag("StructureBlob::wasPlaced")) {
       
         //Retrieve current orientation
         u16 orientation = blob.get_u16("StructureBlobOrientation");
@@ -99,7 +96,7 @@ namespace ANybakk {
             
           } else {
           
-            //Set frame to 0
+            //Set frame to 2
             this.animation.frame = 2;
             
           }
@@ -111,12 +108,12 @@ namespace ANybakk {
         
           if(variants == 2) {
           
-            //Set frame to 0
+            //Set frame to 1
             this.animation.frame = 1;
             
           } else {
           
-            //Set frame to 0
+            //Set frame to 3
             this.animation.frame = 3;
             
           }
